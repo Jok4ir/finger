@@ -1,0 +1,31 @@
+.base{
+  margin-top:10%;
+}
+td{
+  text-align: end;
+}
+h4{
+  font-size: 40px;
+  }
+img{
+  width: 50%;
+  margin: 15% 0% 0% 25%
+}
+.pdp{
+  margin-left: 15%;
+}
+.back{
+    background-image:url(../img/fond.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+.txt2{
+    color:white;
+}
+.cont{
+    background-color: rgba(0, 0, 0, 0.50);
+  height: 480px;
+}
+.slow{
+	margin-top: 10%;
+}

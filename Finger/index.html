@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Finger</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body class="back ">
+	<div class="container">
+		<div class="cont">
+			<div class="row base ">
+				<div class="row slow">
+					<table class="col-8">
+							<tr>
+								<td class="txt2">NOM :</td>
+								<td> <input type="text" name="nom_input" id="name"></td>
+							</tr>
+							<tr>
+								<td class="txt2">PRENOM :</td>
+								<td> <input type="text" name="prenom_input" id="firstname"></td>
+							</tr>
+							<tr>
+								<td class="txt2">ADRESSE :</td>
+								<td> <input type="text" name="adress_input" id="adress"></td>
+							</tr>
+							<tr>
+								<td class="txt2">N° CIN :</td>
+								<td> <input type="text" name="cin_input" id="cin"></td>
+							</tr>
+							<tr>
+								<td class="txt2">Sexe :</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" id="sex">
+										<option value="1">Homme</option>
+										<option value="2">Femme</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class="txt2">Ages :</td>
+								<td> <input type="number" name="age_input" id="age"></td>
+							</tr>
+							<tr>
+								<td class="txt2">Situation Matrimonial :</td>
+								<td>
+									<select class="form-select" aria-label="Default select example" id="situation">
+										<option value="1">Marie(e)</option>
+										<option value="2">Celibataire</option>
+										<option value="3">Veuf(ve)</option>
+										<option value="4">Divorcee</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td class='txt2'>Selectionner un photo:</td>
+								<td><input type="file" name="file" id="file" accept="image/x-png,image/gif,image/jpeg"></td>
+							</tr>
+							<tr>    
+								<td> <button class="btn btn-primary bt"  name="btnUser" value="S'inscrire" id="subm">enregister</button></td>
+								<td> <a href="#">Déja inscrit</a></td>
+							</tr>
+					</table>
+					<div class="col-4">
+						<div class="pdp txt2">Votre Photo:</div>
+						<img src="img/388d94b9525c5264dddd837a33920456.jpg">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="./js/jquery.min.js"></script>
+<script src="./js/app.js"></script>
+</html>
