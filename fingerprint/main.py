@@ -4,7 +4,7 @@ from flask_restful import Resource, Api, reqparse
 import werkzeug
 from werkzeug.utils import secure_filename
 import os
-
+import time
 
 UPLOAD_FOLDER = 'static/img'
 
@@ -19,23 +19,23 @@ parser.add_argument('file',type=werkzeug.datastructures.FileStorage, location='f
 
 def enroll():
     global personid
-    personid += 1
-    varLabel.set("ENROLLING")
+    # personid += 1
+    # varLabel.set("ENROLLING")
     a = ""
     time.sleep(1)
-    # ser.write(bytes('enroll', 'UTF-8'))
+    # ser.write(bytes('enroll', 'UTF-8')) # utils
     print("enrolling")
     # waiting for IDCODE printed by serial
     while a != "IDCODE":
-        a = ser.readline().decode('UTF-8').strip()
+        # a = ser.readline().decode('UTF-8').strip() # utils
         print(a)
-        varLabel.set(a)
+        # varLabel.set(a)
         # time.sleep(1)
     # sending id to serial
-    ser.write(bytes(str(personid), 'UTF-8'))
+    # ser.write(bytes(str(personid), 'UTF-8')) # utils
     # waiting till id is stored
     while a != "Stored":
-        a = ser.readline().decode('UTF-8').strip()
+        # a = ser.readline().decode('UTF-8').strip() # utils
         print(a)
         # time.sleep(1)
     return 1
@@ -47,7 +47,7 @@ def scan():
     # ser.write(bytes('scan', 'UTF-8'))    
     while a != "FOUND_ID":
         # print("waiting for id")
-        a = ser.readline().decode('UTF-8').strip()
+        # a = ser.readline().decode('UTF-8').strip() # utils
         print(a)
         # varLabel.set(a)
         time.sleep(1)

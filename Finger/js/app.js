@@ -37,15 +37,15 @@
             form_data.append('file', file_data);
             // alert(form_data);                             
             $.ajax({
-                url: 'http://localhost:5000/upload', // point to server-side PHP script 
-                dataType: 'text',  // what to expect back from the PHP script, if anything
+                url: 'http://localhost:5000/upload', 
+                dataType: 'text',  
                 cache: false,
                 contentType: false,
                 processData: false,
                 data: form_data,                         
                 type: 'post',
                 success: function(script_response){
-                    // alert(script_response); // display response from the PHP script, if any
+                    
                 }
             });
         })
