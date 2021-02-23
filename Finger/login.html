@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <title>Login</title>
+</head>
+<body class="back">
+    <div class="container">
+    	<div class="cont">
+    		<div class="row base">
+    			<div class="row slow">
+    				<div class="col-4">
+    					<button class="btn2 look">Scanner votre empreinte</button>
+    				</div>
+    				<table class="col-8 form">
+							<tr>
+                                <td class="txt2">NOM :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">PRENOM :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">ADRESSE :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">N° CIN :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">Sexe :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">Ages :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+                                <td class="txt2">Situation Matrimonial :</td>
+                                <td class="txt2">Lorem ipsum dolor sit amet, consectetur </td>
+							</tr>
+							<tr>
+								<td  class="pdp txt2">Votre Photo:</td>
+								<td><img class="pdp2" src="img/388d94b9525c5264dddd837a33920456.jpg"></td>
+							</tr>
+							<tr>    
+								<td> <a class="btn2" href="index.php">Aller à la page d'inscription</a></td>
+							</tr>
+    				</table>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</body>
+</html>
