@@ -18,7 +18,7 @@ parser = reqparse.RequestParser()
 parser.add_argument('file',type=werkzeug.datastructures.FileStorage, location='files')
 
 def enroll():
-    global personid
+    # global personid
     # personid += 1
     # varLabel.set("ENROLLING")
     a = ""
