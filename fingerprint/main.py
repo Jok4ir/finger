@@ -5,9 +5,11 @@ import werkzeug
 from werkzeug.utils import secure_filename
 import os
 import time
+import serial
 
 UPLOAD_FOLDER = 'static/img'
 
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 app = Flask(__name__)
 CORS(app)
@@ -18,24 +20,21 @@ parser = reqparse.RequestParser()
 parser.add_argument('file',type=werkzeug.datastructures.FileStorage, location='files')
 
 def enroll():
-    # global personid
-    # personid += 1
-    # varLabel.set("ENROLLING")
     a = ""
     time.sleep(1)
-    # ser.write(bytes('enroll', 'UTF-8')) # utils
+    ser.write(bytes('enroll', 'UTF-8')) # utils
     print("enrolling")
     # waiting for IDCODE printed by serial
     while a != "IDCODE":
-        # a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip() # utils
         print(a)
         # varLabel.set(a)
         # time.sleep(1)
     # sending id to serial
-    # ser.write(bytes(str(personid), 'UTF-8')) # utils
+    # ser.write(bytes(str(personid), 'UTF-8')) # utils # todo : add mysql feature to get number of persons
     # waiting till id is stored
     while a != "Stored":
-        # a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip() # utils
         print(a)
         # time.sleep(1)
     return 1
@@ -44,14 +43,24 @@ def scan():
     a = ""
     # time.sleep(1)        
     print("scaning")
-    # ser.write(bytes('scan', 'UTF-8'))    
-    while a != "FOUND_ID":
-        # print("waiting for id")
-        # a = ser.readline().decode('UTF-8').strip() # utils
-        print(a)
-        # varLabel.set(a)
-        time.sleep(1)
-    return "1"
+    # ser.write(bytes('scan', 'UTF-8'))
+    toreturn = -1;
+    while True:
+        try:
+            a = ser.readline().decode('UTF-8').strip()
+            toreturn = int(a)
+            return toreturn
+        except ValueError:
+            if(a == "FINGERPRINT_NOTFOUND"):
+                return "error no match"
+    # while a != "FOUND_ID":
+    #     if(a == "FINGERPRINT_NOTFOUND"):
+    #         return "error no match"
+    #     # print("waiting for id")
+    #     # a = ser.readline().decode('UTF-8').strip() # utils
+    #     print(a)
+    #     # varLabel.set(a)
+    #     # time.sleep(1)
 
 class Enroller(Resource):
     def post(self):

@@ -36,6 +36,7 @@ Adafruit_Fingerprint finger = Adafruit_Fingerprint(&mySerial);
 
 uint8_t id;
 String(incomingByte);      // variable stores  serial data
+uint8_t theFingerID;
 
 void setup()  
 {
@@ -102,7 +103,8 @@ void loop()                     // run over and over again
     // if it's an L (ASCII 76) turn off the LED:
     else if (incomingByte == "scan") {
       Serial.println("READYTOSCAN");
-      getFingerprintID();
+      theFingerID = getFingerprintID();
+      Serial.println(theFingerID); // returning the finger id to python
     }
   }
 }
