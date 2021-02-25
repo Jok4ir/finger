@@ -13,7 +13,10 @@ User = Query()
 
 UPLOAD_FOLDER = 'static/img'
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+port_file = open("./port.txt", "r")
+serial_port = port_file.readline()
+
+ser = serial.Serial(serial_port, 9600)
 
 app = Flask(__name__)
 CORS(app)
