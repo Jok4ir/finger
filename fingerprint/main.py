@@ -1,15 +1,14 @@
 from flask import Flask
 from flask_cors import CORS
-from flask_restful import R blablabalesource, Api, reqparse
+from flask_restful import Resource, Api, reqparse
 import werkzeug
 from werkzeug.utils import secure_filename
 import os
 import time
 import serial
-from tinydb import TinyDB, Query
-db = TinyDB('user.json')
 
-User = Query()
+from mysql import connector
+
 
 UPLOAD_FOLDER = 'static/img'
 
@@ -18,85 +17,116 @@ serial_port = port_file.readline()
 
 ser = serial.Serial(serial_port, 9600)
 
+
+# mysql = MySQL()
+
+
 app = Flask(__name__)
 CORS(app)
 api = Api(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-### this must be commited modificationfdsfsqfqsdf
+
+# MySQL configurations
+app.config['MYSQL_DATABASE_USER'] = 'root'
+app.config['MYSQL_DATABASE_PASSWORD'] = 'toor'
+app.config['MYSQL_DATABASE_DB'] = 'fingerprint'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+# mysql.init_app(app)
+
+db_connection = connector.connect(host=app.config['MYSQL_DATABASE_HOST'], user=app.config['MYSQL_DATABASE_USER'],
+                                  passwd=app.config['MYSQL_DATABASE_PASSWORD'], database=app.config['MYSQL_DATABASE_DB'])
+
 parser = reqparse.RequestParser()
-parser.add_argument('file',type=werkzeug.datastructures.FileStorage, location='files')
+parser.add_argument(
+    'file', type=werkzeug.datastructures.FileStorage, location='files')
+
 
 def enroll():
     a = ""
     time.sleep(1)
-    ser.write(bytes('enroll', 'UTF-8')) # utils
+    ser.write(bytes('enroll', 'UTF-8'))  # utils
     print("enrolling")
     # waiting for IDCODE printed by serial
     while a != "IDCODE":
-        a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
     # sending id to serial
-    personid = len(db) + 1 # getting number of person registered in db then add one for the next person
-    ser.write(bytes(str(personid), 'UTF-8')) # utils
+    sql = "SELECT * FROM users"
+    cursor = db_connection.cursor()
+    cursor.execute(sql)
+    personid = len(cursor.fetchall()) + 1 # count number of person in db then add one for the id of the next person
+    cursor.close()
+    ser.write(bytes(str(personid), 'UTF-8'))  # utils
     # waiting till id is stored
     while True:
-        a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
-        if(a == "FINGERPRINT_NOT_MATCH"): # errot fingerprint not matching
+        if(a == "FINGERPRINT_NOT_MATCH"):  # errot fingerprint not matching
             return False
-        if(a == "STORED"): # successfully stored
+        if(a == "STORED"):  # successfully stored
             return True
         # time.sleep(1)
     return True
 
+
 def enroll_step_1():
     a = ""
     time.sleep(1)
-    ser.write(bytes('enroll', 'UTF-8')) # utils
+    ser.write(bytes('enroll', 'UTF-8'))  # utils
     print("enrolling")
     # waiting for IDCODE printed by serial
     while a != "IDCODE":
-        a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
     # sending id to serial
-    personid = len(db) + 1 # getting number of person registered in db then add one for the next person
-    ser.write(bytes(str(personid), 'UTF-8')) # utils
+    # getting number of person registered in db then add one for the next person
+    sql = "SELECT * FROM users"
+    cursor = db_connection.cursor()
+    cursor.execute(sql)
+    personid = len(cursor.fetchall()) + 1 # count number of person in db then add one for the id of the next person
+    cursor.close()
+    ser.write(bytes(str(personid), 'UTF-8'))  # utils
+    ser.write(bytes(str(personid), 'UTF-8'))  # utils
     # waiting till id is stored
     while True:
-        a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
-        if(a == "REMOVE_HAND"): # step 1 successfull
+        if(a == "REMOVE_HAND"):  # step 1 successfull
             return True
         # time.sleep(1)
     return True
+
 
 def enroll_step_2():
     a = ""
     # waiting till id is stored
     while True:
-        a = ser.readline().decode('UTF-8').strip() # utils
+        a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
-        if(a == "FINGERPRINT_NOT_MATCH"): # errot fingerprint not matching
+        if(a == "FINGERPRINT_NOT_MATCH"):  # errot fingerprint not matching
             return False
-        if(a == "STORED"): # successfully stored
+        if(a == "STORED"):  # successfully stored
             return True
         # time.sleep(1)
     return True
 
+
 def scan():
     a = ""
-    # time.sleep(1)        
+    # time.sleep(1)
     print("scaning")
     # ser.write(bytes('scan', 'UTF-8'))
     toreturn = -1
     while True:
         try:
             a = ser.readline().decode('UTF-8').strip()
-            toreturn = int(a) # try to convert the message to int (if arduino send the ID of the person)
+            # try to convert the message to int (if arduino send the ID of the person)
+            toreturn = int(a)
             return toreturn
-        except ValueError: # if the message is not convertible to int, then we are on processing phase
-            if(a == "FINGERPRINT_NOTFOUND"): # the finger does not match in any of the finger in memory
+        except ValueError:  # if the message is not convertible to int, then we are on processing phase
+            if(a == "FINGERPRINT_NOTFOUND"):  # the finger does not match in any of the finger in memory
                 return -1
+
 
 class Enroller(Resource):
     def post(self):
@@ -107,7 +137,8 @@ class Enroller(Resource):
         parser.add_argument('sex', type=int)
         parser.add_argument('age', type=int)
         parser.add_argument('situation', type=int)
-        parser.add_argument('file', type=werkzeug.datastructures.FileStorage, location='files')
+        parser.add_argument(
+            'file', type=werkzeug.datastructures.FileStorage, location='files')
         args = parser.parse_args()
         return {
             'name': args['name'],
@@ -118,44 +149,45 @@ class Enroller(Resource):
             'age': args['age'],
             'situation': args['situation'],
             'img_filename': "" + str(args['name']) + str(args['cin']) + ".jpeg"
-        }, 201, {'Access-Control-Allow-Origin': '*'} 
+        }, 201, {'Access-Control-Allow-Origin': '*'}
+
 
 class PhotoUpload(Resource):
-    decorators=[]
+    decorators = []
 
     def post(self):
         data = parser.parse_args()
         if data['file'] == "":
             return {
-                    'data':'',
-                    'message':'No file found',
-                    'status':'error'
-                    }, 201, {'Access-Control-Allow-Origin': '*'} 
+                'data': '',
+                'message': 'No file found',
+                'status': 'error'
+            }, 201, {'Access-Control-Allow-Origin': '*'}
         photo = data['file']
 
         if photo:
             filename = data['img_filename']
-            photo.save(os.path.join(UPLOAD_FOLDER,filename))
+            photo.save(os.path.join(UPLOAD_FOLDER, filename))
             return {
-                    'data':'',
-                    'message':'photo uploaded',
-                    'status':'success'
-                    }, 201, {'Access-Control-Allow-Origin': '*'} 
+                'data': '',
+                'message': 'photo uploaded',
+                'status': 'success'
+            }, 201, {'Access-Control-Allow-Origin': '*'}
         return {
-                'data':'',
-                'message':'Something when wrong',
-                'status':'error'
-                }, 201, {'Access-Control-Allow-Origin': '*'} 
-
+            'data': '',
+            'message': 'Something when wrong',
+            'status': 'error'
+        }, 201, {'Access-Control-Allow-Origin': '*'}
 
 
 class HelloWorld(Resource):
     def get(self):
-        return {'hello': 'world', 'nom': 'setra'}, 201, {'Access-Control-Allow-Origin': '*'} 
+        return {'hello': 'world', 'nom': 'setra'}, 201, {'Access-Control-Allow-Origin': '*'}
+
 
 api.add_resource(HelloWorld, '/')
 api.add_resource(Enroller, '/enroll')
-api.add_resource(PhotoUpload,'/upload')
+api.add_resource(PhotoUpload, '/upload')
 
 if __name__ == '__main__':
     if not os.path.exists(UPLOAD_FOLDER):
@@ -163,5 +195,5 @@ if __name__ == '__main__':
     ms = ""
     # waiting until the arduino is ready
     while ms != "READY":
-        ms = ser.readline().decode('UTF-8').strip() # utils
+        ms = ser.readline().decode('UTF-8').strip()  # utils
     app.run(debug=True)
