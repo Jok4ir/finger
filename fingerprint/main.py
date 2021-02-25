@@ -158,6 +158,8 @@ api.add_resource(Enroller, '/enroll')
 api.add_resource(PhotoUpload,'/upload')
 
 if __name__ == '__main__':
+    if not os.path.exists(UPLOAD_FOLDER):
+        os.makedirs(UPLOAD_FOLDER)
     ms = ""
     # waiting until the arduino is ready
     while ms != "READY":
