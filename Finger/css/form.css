@@ -162,7 +162,7 @@ form .page .field .btns button.Next{
 }
 .progress-bar .step .bullet.active:after{
     background:#1670d1;
-    transform:scaleX(0);
+    transform:scaleX(1);
     transform-origin:left;
     animation: animate 0.4 linear forwards;
 }
@@ -186,7 +186,7 @@ form .page .field .btns button.Next{
 .progress-bar .step  .check{
  position: absolute;
  left: 50%;
- top: 70%;
+ top: 78%;
  font-size: 15px;
  transform: translate(-50%,-50%);
  display: none;
