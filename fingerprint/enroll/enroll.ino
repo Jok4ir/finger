@@ -88,7 +88,7 @@ void loop()                     // run over and over again
     // if it's a capital H (ASCII 72), turn on the LED:
     if (incomingByte == "enroll") {
       Serial.println("Vonona ve seh ?");
-      Serial.println("Safidio ary ny emplacement ny numero tianao asina azy (entre 1-127), Apetraho ary le ratsany eh!");
+      Serial.println("Safidio ary ny emplacement ny numero tianao asina azy (entre 1-127), Apetraho ary le aratsany eh!");
       Serial.println("IDCODE");
       id = readnumber();
       if (id == 0) {// ID #0 not allowed, try again!
@@ -202,7 +202,7 @@ int getFingerprintIDez() {
 
 
 
-//enrolle,enntnkdfhqjdfqjfljd
+//enroll
 
 uint8_t getFingerprintEnroll() {
 
@@ -261,7 +261,7 @@ uint8_t getFingerprintEnroll() {
   }
   Serial.print("ID "); Serial.println(id);
   p = -1;
-  Serial.println("Blague kely fotsiny iny fa avereno apetraka");
+  Serial.println("REPUT_HAND");
   while (p != FINGERPRINT_OK) {
     p = finger.getImage();
     switch (p) {
@@ -269,7 +269,7 @@ uint8_t getFingerprintEnroll() {
       Serial.println("FINGERPRINT_OK2");
       break;
     case FINGERPRINT_NOFINGER:
-      Serial.print(".");
+      Serial.print("");
       break;
     case FINGERPRINT_PACKETRECIEVEERR:
       Serial.println("Communication error");
@@ -313,12 +313,12 @@ uint8_t getFingerprintEnroll() {
   
   p = finger.createModel();
   if (p == FINGERPRINT_OK) {
-    Serial.println("Prints matched!");
+    Serial.println("PRINT_MATCH");
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
   } else if (p == FINGERPRINT_ENROLLMISMATCH) {
-    Serial.println("Fingerprints did not match");
+    Serial.println("FINGERPRINT_NOT_MATCH");
     return p;
   } else {
     Serial.println("Unknown error");
@@ -328,7 +328,7 @@ uint8_t getFingerprintEnroll() {
   Serial.print("ID "); Serial.println(id);
   p = finger.storeModel(id);
   if (p == FINGERPRINT_OK) {
-    Serial.println("Stored");
+    Serial.println("STORED");
   } else if (p == FINGERPRINT_PACKETRECIEVEERR) {
     Serial.println("Communication error");
     return p;
