@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" type="text/css" href="css/form.css">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <title>Document</title>
+    <title>Formulaire</title>
 </head>
 <body>
     <div class="container"> 
@@ -20,7 +20,7 @@
                 <div class="check fas fa-check"></div>
             </div>
             <div class="step">
-                <p>Contacts</p>
+                <p>Empreinte</p>
                 <div class="bullet">
                     <span>2</span>
                 </div>
@@ -55,6 +55,35 @@
                         <div class="label">Prénoms:</div>
                         <input type="text">
                     </div>
+                    <div class="field">
+                        <div class="label">Adresse:</div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">N° CIN:</div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">Sexe:</div>
+                        <input type="text">
+                    </div>
+                    <div class="field">
+                        <div class="label">Ages:</div>
+                        <input type="number">
+                    </div>
+                    <div class="field">
+                        <div class="label">Situation matrimonial:</div>
+                        <select>
+                            <option value="">Marié(e)</option>
+                            <option value="">Célibataire</option>
+                            <option value="">Divorcé(e)</option>
+                            <option value="">Veuf(ve)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <div class="label">Sélectionner une photo:</div>
+                        <input type="file" style="color: white;" name="file" id="file" accept="image/x-png,image/gif,image/jpeg">
+                    </div>
                     <div class="field nextBtn">
                        <button>Suivant</button>
                     </div>
@@ -62,15 +91,11 @@
 
                 <div class="page">
                     <div class="title">
-                       Contacts
+                       Enrollement
                     </div>
                     <div class="field">
-                        <div class="label">Adresse E-mail:</div>
-                        <input type="text">
-                    </div>
-                    <div class="field">
-                        <div class="label">Mobile:</div>
-                        <input type="number">
+                        <div class="label">Veuillez mettre votre doigt:</div>
+                        <object type="image/svg+xml" data="img/svg/fingerprint-with-crosshair-focus.svg"></object>
                     </div>
                     <div class="field btns">
                        <button class="Prev-1 Prev">Précédent</button>
