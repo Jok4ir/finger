@@ -31,7 +31,7 @@ nextBtnSec.addEventListener("click", function () {
 });
 nextBtnThird.addEventListener("click", function () {
     slidePage.style.marginLeft = "-75%";
-    content.style.height="330px";
+    content.style.height="400px";
     bullet[current - 1].classList.add("active");
     progressText[current - 1].classList.add("active");
     progressCheck[current - 1].classList.add("active");
