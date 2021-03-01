@@ -182,7 +182,7 @@ class PhotoUpload(Resource):
 
 class HelloWorld(Resource):
     def get(self):
-        return {'hello': 'world', 'nom': 'setra'}, 201, {'Access-Control-Allow-Origin': '*'}
+        return {'hello': 'world', 'nom': 'setra'}, 200, {'Access-Control-Allow-Origin': '*'}
 
 
 api.add_resource(HelloWorld, '/')
