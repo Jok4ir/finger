@@ -201,3 +201,8 @@ form .page .field .btns button.Next{
  display: block;
  color:white;
 }
+
+.fingerImage {
+    align-items: center;
+    align-content: center;
+}

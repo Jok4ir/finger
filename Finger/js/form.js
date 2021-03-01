@@ -10,10 +10,12 @@ const progressText = document.querySelectorAll(".step p");
 const progressCheck = document.querySelectorAll(".step .check");
 const bullet = document.querySelectorAll(".step .bullet");
 const content = document.querySelector(".container");
+const tohide = document.querySelector(".tohide");
 let max = 4;
 let current = 1;
 
 firstNextBtn.addEventListener("click", function () {
+    // tohide.style.opacity = "0.1";
     slidePage.style.marginLeft = "-25%";
     content.style.height="400px";
     bullet[current - 1].classList.add("active");
