@@ -1,6 +1,6 @@
 (() => {
     $("#subm").on("click", (e) => {
-        console.log("clicked");
+        // console.log("clicked");
         e.preventDefault();
         let name = $("#name")[0].value;
         let firstname = $("#firstname")[0].value;
