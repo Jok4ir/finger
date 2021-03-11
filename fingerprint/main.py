@@ -86,7 +86,6 @@ def enroll_step_1():
     personid = len(cursor.fetchall()) + 1 # count number of person in db then add one for the id of the next person
     cursor.close()
     ser.write(bytes(str(personid), 'UTF-8'))  # utils
-    ser.write(bytes(str(personid), 'UTF-8'))  # utils
     # waiting till id is stored
     while True:
         a = ser.readline().decode('UTF-8').strip()  # utils
