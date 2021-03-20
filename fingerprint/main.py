@@ -19,6 +19,10 @@ ser = serial.Serial(serial_port, 9600)
 
 
 # mysql = MySQL()
+# jaune -> 2
+# bleu => 3
+# rouge => + 5V
+# noir => - GND
 
 
 app = Flask(__name__)
@@ -140,16 +144,25 @@ class Enroller(Resource):
         parser.add_argument(
             'file', type=werkzeug.datastructures.FileStorage, location='files')
         args = parser.parse_args()
-        return {
-            'name': args['name'],
-            'first_name': args['firstName'],
-            'adress': args['adress'],
-            'cin': args['cin'],
-            'sex': args['sex'],
-            'age': args['age'],
-            'situation': args['situation'],
-            'img_filename': "" + str(args['name']) + str(args['cin']) + ".jpeg"
-        }, 201, {'Access-Control-Allow-Origin': '*'}
+        enroll_step_1()
+        f = enroll_step_2()
+        if(f):
+            return {
+                'name': args['name'],
+                'first_name': args['firstName'],
+                'adress': args['adress'],
+                'cin': args['cin'],
+                'sex': args['sex'],
+                'age': args['age'],
+                'situation': args['situation'],
+                'img_filename': "" + str(args['name']) + str(args['cin']) + ".jpeg"
+            }, 201, {'Access-Control-Allow-Origin': '*'}
+        else:
+            return {
+                'message' : 'there was an error'
+            }, 400, {'Access-Control-Allow-Origin': '*'}
+
+        
 
 
 class PhotoUpload(Resource):
@@ -195,5 +208,7 @@ if __name__ == '__main__':
     ms = ""
     # waiting until the arduino is ready
     while ms != "READY":
-        ms = ser.readline().decode('UTF-8').strip()  # utils
+        a = ser.readline().decode('UTF-8').strip()
+        print(a)
+        time.sleep(1)
     app.run(debug=True)

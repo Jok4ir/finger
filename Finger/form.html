@@ -50,11 +50,11 @@
                     </div>
                     <div class="field">
                         <div class="label">Nom:</div>
-                        <input type="text">
+                        <input type="text" id="name">
                     </div>
                     <div class="field">
                         <div class="label">Prénoms:</div>
-                        <input type="text">
+                        <input type="text" id="firstname">
                     </div>
                     <div class="field">
                         <div class="label">Adresse:</div>
@@ -62,11 +62,11 @@
                     </div>
                     <div class="field">
                         <div class="label">N° CIN:</div>
-                        <input type="text">
+                        <input type="text" id="cin">
                     </div>
                     <div class="field">
                         <div class="label">Sexe:</div>
-                        <select>
+                        <select id="sex">
                             <option>Mâle</option>
                             <option>Femelle</option>
                             <option>Autres</option>
@@ -74,11 +74,11 @@
                     </div>
                     <div class="field">
                         <div class="label">Ages:</div>
-                        <input type="number">
+                        <input type="number" id="age">
                     </div>
                     <div class="field">
                         <div class="label">Situation matrimonial:</div>
-                        <select>
+                        <select id="situation">
                             <option value="">Marié(e)</option>
                             <option value="">Célibataire</option>
                             <option value="">Divorcé(e)</option>
@@ -87,10 +87,10 @@
                     </div>
                     <div class="field">
                         <div class="label">Sélectionner une photo:</div>
-                        <input type="file" style="color: white;" name="file" id="file" accept="image/x-png,image/gif,image/jpeg">
+                        <input type="file" id="file" style="color: white;" name="file" id="file" accept="image/x-png,image/gif,image/jpeg">
                     </div>
                     <div class="field nextBtn">
-                       <button>Suivant</button>
+                       <button id="subm">Suivant</button>
                     </div>
                 </div>
 
@@ -143,5 +143,6 @@
         </div>
     </div>
     <script src="js/form.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

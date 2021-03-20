@@ -45,7 +45,7 @@ def set_button2_state():
         varLabel.set(a)
         time.sleep(1)
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+ser = serial.Serial('COM7', 9600)
 print("Reset Arduino")
 time.sleep(3)
 ser.write(bytes('E', 'UTF-8'))
