@@ -1,11 +1,13 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Resource, Api, reqparse
+from serial.serialwin32 import Serial
 import werkzeug
 from werkzeug.utils import secure_filename
 import os
 import time
 import serial
+import uuid
 
 from mysql import connector
 
@@ -15,7 +17,14 @@ UPLOAD_FOLDER = 'static/img'
 port_file = open("./port.txt", "r")
 serial_port = port_file.readline()
 
-ser = serial.Serial(serial_port, 9600)
+try:
+    ser = serial.Serial(serial_port, 9600)
+except Exception as e:
+    print(e)
+
+# ser = serial.Serial(serial_port, 9600)
+# ser = serial.serial_for_url(serial_port)
+# ser.open()
 
 
 # mysql = MySQL()
@@ -37,12 +46,35 @@ app.config['MYSQL_DATABASE_DB'] = 'fingerprint'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 # mysql.init_app(app)
 
+db_connection = None
+
 db_connection = connector.connect(host=app.config['MYSQL_DATABASE_HOST'], user=app.config['MYSQL_DATABASE_USER'],
                                   passwd=app.config['MYSQL_DATABASE_PASSWORD'], database=app.config['MYSQL_DATABASE_DB'])
 
 parser = reqparse.RequestParser()
 parser.add_argument(
     'file', type=werkzeug.datastructures.FileStorage, location='files')
+
+def getReady():
+    ms = ""
+    # waiting until the arduino is ready
+    while True:
+        ms = ser.readline().decode('UTF-8').strip()
+        print(ms)
+        time.sleep(.100)
+        if(ms == 'FSETUP'):
+            ser.write(bytes('\n', 'UTF-8'))  # utils
+        if(ms == 'READY'):
+            return 1
+def initDatabase():
+    # sql = "CREATE DATABASE IF NOT EXISTS fingerprint"
+    cursor = db_connection.cursor()
+    # cursor.execute(sql)
+    # print("database created")
+    sql = "CREATE TABLE IF NOT EXISTS users (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(250), first_name VARCHAR(250), cin VARCHAR(12), sex INT(8), age INT(8), situation INT(8), img_filename VARCHAR(255))"
+    cursor.execute(sql)
+    print("table created")
+    cursor.close()
 
 
 def enroll():
@@ -108,6 +140,7 @@ def enroll_step_2():
         a = ser.readline().decode('UTF-8').strip()  # utils
         print(a)
         if(a == "FINGERPRINT_NOT_MATCH"):  # errot fingerprint not matching
+            print("fingerPrint didn't match dada")
             return False
         if(a == "STORED"):  # successfully stored
             return True
@@ -170,6 +203,7 @@ class PhotoUpload(Resource):
 
     def post(self):
         data = parser.parse_args()
+        print(data)
         if data['file'] == "":
             return {
                 'data': '',
@@ -179,7 +213,7 @@ class PhotoUpload(Resource):
         photo = data['file']
 
         if photo:
-            filename = data['img_filename']
+            filename = str(uuid.uuid4()) + ".jpeg"
             photo.save(os.path.join(UPLOAD_FOLDER, filename))
             return {
                 'data': '',
@@ -203,12 +237,16 @@ api.add_resource(Enroller, '/enroll')
 api.add_resource(PhotoUpload, '/upload')
 
 if __name__ == '__main__':
+    
+    # try:
+    #     ser = serial.Serial(serial_port, 9600)
+    # except Exception as e:
+    #     print(e)
+    #     pass
+        
+    initDatabase()
     if not os.path.exists(UPLOAD_FOLDER):
         os.makedirs(UPLOAD_FOLDER)
-    ms = ""
-    # waiting until the arduino is ready
-    while ms != "READY":
-        a = ser.readline().decode('UTF-8').strip()
-        print(a)
-        time.sleep(1)
-    app.run(debug=True)
+    getReady()
+    #ser.close()
+    app.run(debug=False, use_evalex=False, threaded=True)
