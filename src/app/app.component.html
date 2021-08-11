@@ -1,0 +1,7 @@
+<!-- <app-fileupload></app-fileupload> -->
+<div *ngIf="(this.action$ | async) == 'home'">
+  <button (click)="gotoscan()">SCAN</button>
+  <button (click)="gotoenroll()">ENROLL</button>
+</div>
+<app-scan *ngIf="(this.action$ | async) == 'scan'"></app-scan>
+<app-enroll *ngIf="(this.action$ | async) == 'enroll'"></app-enroll>

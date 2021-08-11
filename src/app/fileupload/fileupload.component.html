@@ -1,0 +1,18 @@
+<div class="container">
+  <div>Choose your image</div>
+  <div class="wrapper">
+    <div class="image">
+      <img src="">
+    </div>
+    <div class="content">
+      <div class="icon">
+        <div class="text">No file chosen, yet</div>
+      </div>
+    </div>
+    <div id="cancel-btn"></div>
+    <div class="file-name">File name here</div>
+  </div>
+  <input id="default-btn" type="file" hidden (change)="fileChanged($event)">
+  <button id="custom-btn" (click)="defaultBtnActive()">Choose a file</button>
+  <button id="custom-btn" (click)="onUpload()">TERMINER</button>
+</div>

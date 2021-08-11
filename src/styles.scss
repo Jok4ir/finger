@@ -1,0 +1,107 @@
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  text-align: center;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: medium;
+}
+
+.container {
+  height: 350px;
+  width: 430px;
+}
+
+.container .wrapper {
+  position: relative;
+  height: 300px;
+  width: 100%;
+  border-radius: 10px;
+  background: #fff;
+  border: 2px dashed #c2cdda;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.wrapper .image {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wrapper .image img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.wrapper .text {
+  font-size: 20px;
+  font-weight: 500;
+  color: #5b5b7b;
+}
+
+.wrapper #cancel-btn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #9658fe;
+}
+
+.wrapper .file-name {
+  position: absolute;
+  bottom: 0px;
+  color: #fff;
+  width: 100%;
+  padding: 8px 0;
+  font-size: 18px;
+  background-color: #9658fe;
+  display: none;
+}
+
+.container #custom-btn{
+  margin-top: 30px;
+  width: 100%;
+  display: block;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: #9658fe;
+}
+
+button {
+	margin-top: 30px;
+  width: 100%;
+  display: block;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  color: #fff;
+  font-size: 18px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  text-transform: uppercase;
+  background-color: #9658fe;
+}
+// button:hover {
+// 	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+// 	background-color:#408c99;
+// }
+// button:active {
+// 	position:relative;
+// 	top:1px;
+// }

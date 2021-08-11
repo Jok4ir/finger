@@ -1,0 +1,7 @@
+<p>Name : {{ this.name$ | async }}</p>
+<p>First name : {{ this.first_name$ | async }}</p>
+<p>Email : {{ this.email$ | async }}</p>
+<img [src]="this.imgUrl + (this.imgfilename$ | async)" alt="">
+<p>fingerID : {{ this.fingerID$ | async }}</p>
+<button (click)="scanClick()">Scan</button>
+<button (click)="gotohome()">Retour</button>
